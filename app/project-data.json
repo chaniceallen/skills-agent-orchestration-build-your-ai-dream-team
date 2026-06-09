@@ -1,0 +1,46 @@
+{
+  "projects": [
+    {
+      "name": "Website Redesign",
+      "owner": "Aisha Khan",
+      "status": "Active",
+      "recentActivity": "Updated homepage mockups",
+      "priority": "High"
+    },
+    {
+      "name": "Mobile App - Phase 2",
+      "owner": "Carlos Mendes",
+      "status": "On Hold",
+      "recentActivity": "Awaiting API stability",
+      "priority": "Medium"
+    },
+    {
+      "name": "Sales Dashboard",
+      "owner": "Emily Chen",
+      "status": "Completed",
+      "recentActivity": "Released v1.0",
+      "priority": "Low"
+    },
+    {
+      "name": "Infrastructure Migration",
+      "owner": "DevOps Team",
+      "status": "Delayed",
+      "recentActivity": "Rollout postponed due to vendor issue",
+      "priority": "Critical"
+    },
+    {
+      "name": "Customer Onboarding Flow",
+      "owner": "Liam O'Connor",
+      "status": "Planning",
+      "recentActivity": "Kickoff meeting scheduled",
+      "priority": "High"
+    },
+    {
+      "name": "Accessibility Improvements",
+      "owner": "Sofia Garcia",
+      "status": "Active",
+      "recentActivity": "Audit in progress",
+      "priority": "Medium"
+    }
+  ]
+}

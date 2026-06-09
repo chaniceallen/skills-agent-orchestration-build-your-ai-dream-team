@@ -1,0 +1,270 @@
+/* Project Pulse - app/styles.css
+   Polished dashboard styles (self-contained)
+   Tokens, responsive grid, accessible focus, status & priority classes
+*/
+
+:root{
+  /* Color tokens */
+  --color-bg: #0f1724; /* deep night */
+  --color-surface: #0f2130; /* slightly lighter */
+  --color-card: #0b1220;
+  --color-primary: #4f9cff; /* bright blue */
+  --color-accent: #7ee787; /* green accent */
+  --color-text: #e6eef8; /* high-contrast text */
+  --color-muted: #9fb0c8; /* secondary text */
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-outline: rgba(79,156,255,0.18);
+
+  /* Spacing scale */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Type scale */
+  --font-family-system: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --type-xxs: 12px;
+  --type-xs: 13px;
+  --type-sm: 14px;
+  --type-md: 16px;
+  --type-lg: 20px;
+  --type-xl: 24px;
+
+  /* Misc */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --shadow-1: 0 4px 12px rgba(2,6,23,0.6);
+  --shadow-2: 0 8px 24px rgba(2,6,23,0.75);
+}
+
+/* Base document */
+html,body{
+  height:100%;
+}
+body{
+  margin:0;
+  background: linear-gradient(180deg,var(--color-bg) 0%, #071026 100%);
+  color:var(--color-text);
+  font-family:var(--font-family-system);
+  font-size:var(--type-md);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.35;
+}
+
+/* Dashboard container */
+.dashboard{
+  max-width:1200px;
+  margin:var(--space-lg) auto;
+  padding:var(--space-md);
+  box-sizing:border-box;
+}
+
+.dashboard-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--space-md);
+  margin-bottom:var(--space-lg);
+}
+
+.dashboard-title{
+  display:flex;
+  gap:var(--space-sm);
+  align-items:center;
+}
+
+.dashboard-title h1{
+  margin:0;
+  font-size:var(--type-xl);
+  letter-spacing: -0.01em;
+}
+
+.dashboard-controls{
+  display:flex;
+  gap:var(--space-sm);
+  align-items:center;
+}
+
+/* Responsive grid for project cards - mobile-first */
+.project-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:var(--space-md);
+}
+
+@media (min-width:640px){
+  .project-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width:1024px){
+  .project-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Project card */
+.project-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+  border-radius:var(--radius-md);
+  padding:var(--space-md);
+  box-shadow:var(--shadow-1);
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  display:flex;
+  flex-direction:column;
+  gap:var(--space-sm);
+  min-height:120px;
+}
+
+.project-card:focus-within,
+.project-card:hover{
+  transform: translateY(-4px);
+  box-shadow:var(--shadow-2);
+}
+
+.project-card:focus-visible{
+  outline: 3px solid var(--color-outline);
+  outline-offset:2px;
+}
+
+.project-card-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:var(--space-sm);
+}
+
+.project-title{
+  margin:0;
+  font-size:var(--type-lg);
+}
+
+.project-meta{
+  display:flex;
+  gap:var(--space-xs);
+  align-items:center;
+  color:var(--color-muted);
+  font-size:var(--type-sm);
+}
+
+/* Badges */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:var(--type-xxs);
+  font-weight:600;
+}
+
+/* Status classes (escaped names allowed by using backslash in markup) */
+.status-Not\ Started{ background: rgba(255,255,255,0.03); color:var(--color-muted); border: 1px solid rgba(255,255,255,0.02); }
+.status-In\ Progress{ background: linear-gradient(90deg, rgba(79,156,255,0.12), rgba(124, 182, 255,0.06)); color:var(--color-primary); border:1px solid rgba(79,156,255,0.12); }
+.status-Blocked{ background: linear-gradient(90deg, rgba(239,68,68,0.06), rgba(239,68,68,0.03)); color:var(--color-danger); border:1px solid rgba(239,68,68,0.09); }
+.status-Complete{ background: linear-gradient(90deg, rgba(16,185,129,0.06), rgba(16,185,129,0.03)); color:var(--color-success); border:1px solid rgba(16,185,129,0.08); }
+
+/* Priority accent left border */
+.project-card.priority-High{ border-left: 6px solid rgba(239,68,68,0.9); }
+.project-card.priority-Medium{ border-left: 6px solid rgba(245,158,11,0.9); }
+.project-card.priority-Low{ border-left: 6px solid rgba(16,185,129,0.9); }
+
+/* Card body */
+.project-summary{
+  color:var(--color-muted);
+  font-size:var(--type-sm);
+  margin-top:var(--space-xs);
+  flex:1 1 auto;
+}
+
+.project-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--space-sm);
+  margin-top:var(--space-sm);
+}
+
+/* Interactive controls */
+.btn{
+  -webkit-tap-highlight-color: transparent;
+  background: transparent;
+  color:var(--color-text);
+  border:1px solid rgba(255,255,255,0.06);
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:var(--type-sm);
+}
+
+.btn-primary{
+  background: linear-gradient(90deg,var(--color-primary), #6fb0ff);
+  border: none;
+  color: #04243a;
+}
+
+.btn:focus-visible,
+button:focus-visible,
+a:focus-visible{
+  outline:3px solid var(--color-outline);
+  outline-offset:3px;
+}
+
+.btn:active{
+  transform: translateY(1px);
+}
+
+a{
+  color:var(--color-primary);
+  text-decoration:none;
+}
+
+a:hover{
+  text-decoration:underline;
+}
+
+/* Small utility */
+.kv{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  font-size:var(--type-xs);
+}
+
+.kv .key{ color:var(--color-muted); }
+.kv .value{ color:var(--color-text); font-weight:700; }
+
+/* Accessibility helpers */
+.sr-only{
+  position:absolute !important;
+  height:1px; width:1px; overflow:hidden;
+  clip:rect(1px,1px,1px,1px); white-space:nowrap;
+}
+
+/* Empty state */
+.dashboard-empty{
+  border-radius:var(--radius-md);
+  padding:var(--space-lg);
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+  text-align:center;
+  color:var(--color-muted);
+}
+
+/* Ensure focusable cards for keyboard users */
+.project-card[tabindex]{
+  cursor:pointer;
+}
+
+/* Make sure high contrast: dark background with light text for readability */
+@media (prefers-contrast:more){
+  :root{ --color-text: #ffffff; --color-muted: #c9d7e6; }
+  .project-card{ box-shadow: 0 6px 18px rgba(0,0,0,0.85); }
+}

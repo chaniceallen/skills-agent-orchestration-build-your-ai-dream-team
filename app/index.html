@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Project Pulse</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Project Pulse</h1>
+    <p id="status" aria-live="polite">Loading projects&hellip;</p>
+  </header>
+  <main>
+    <section id="projects" aria-label="Projects list">
+      <!-- Project cards will be rendered here -->
+    </section>
+  </main>
+  <script>
+    // Minimal helper to avoid inserting raw HTML
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    document.addEventListener('DOMContentLoaded', async function () {
+      const statusEl = document.getElementById('status');
+      const container = document.getElementById('projects');
+
+      try {
+        const res = await fetch('./project-data.json');
+        if (!res.ok) throw new Error('Network response was not ok (' + res.status + ')');
+        const data = await res.json();
+
+        if (!data || !Array.isArray(data.projects)) {
+          statusEl.textContent = 'Project data is malformed.';
+          return;
+        }
+
+        if (data.projects.length === 0) {
+          statusEl.textContent = 'No projects to display.';
+          return;
+        }
+
+        // Clear loading message
+        statusEl.textContent = '';
+
+        data.projects.forEach(function (p) {
+          // Validate required fields
+          if (!p.name || !p.owner || !p.status || !p.recentActivity || !p.priority) return;
+
+          const card = document.createElement('article');
+          card.className = 'project-card';
+
+          // Accessible heading and content
+          card.innerHTML = '\n            <h2>' + escapeHtml(p.name) + '</h2>\n            <p><strong>Owner:</strong> ' + escapeHtml(p.owner) + '</p>\n            <p><strong>Status:</strong> ' + escapeHtml(p.status) + '</p>\n            <p><strong>Recent Activity:</strong> ' + escapeHtml(p.recentActivity) + '</p>\n            <p><strong>Priority:</strong> ' + escapeHtml(p.priority) + '</p>\n          ';
+
+          container.appendChild(card);
+        });
+
+        if (container.children.length === 0) {
+          statusEl.textContent = 'No valid projects found in data.';
+        } else {
+          statusEl.textContent = container.children.length + ' project(s) loaded.';
+        }
+
+      } catch (err) {
+        statusEl.textContent = 'Failed to load projects: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
